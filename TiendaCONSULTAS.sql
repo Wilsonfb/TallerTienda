@@ -1,0 +1,76 @@
+USE tienda;
+
+SELECT * FROM Usuario;
+SELECT Nombres, Apellidos FROM Usuario;
+SELECT * FROM Usuario WHERE id = 3;
+SELECT * FROM Usuario WHERE idCargo = 2;
+SELECT Telefono FROM Usuario WHERE Nombres = 'Ana';
+SELECT Direccion FROM Usuario WHERE Nombres = 'Carlos';
+SELECT COUNT(*) FROM Usuario WHERE idCargo = 2;
+SELECT COUNT(*) FROM Usuario WHERE idCargo = 1;
+SELECT Apellidos, Direccion, idCargo FROM Usuario WHERE Nombres = 'Luis';
+SELECT * FROM Usuario WHERE Direccion LIKE 'Calle 123%';
+SELECT Usuario.Nombres, Usuario.Apellidos, Cargo.Nombre FROM Usuario INNER JOIN Cargo ON Usuario.idCargo = Cargo.idCargo;
+SELECT Usuario.id, Usuario.Nombres, Usuario.Apellidos, Usuario.Telefono, Cargo.Nombre FROM Usuario INNER JOIN Cargo ON Usuario.idCargo = Cargo.idCargo;
+
+SELECT * FROM Alimento;
+SELECT Nombre, Precio FROM Alimento;
+SELECT * FROM Alimento WHERE idAlimento = 3;
+SELECT Nombre, Descripcion, Precio FROM Alimento WHERE idAlimento = 4;
+SELECT * FROM Alimento WHERE Tipo = 'Perro';
+SELECT * FROM Alimento WHERE Precio > 20.00;
+SELECT COUNT(*) AS TotalGatos FROM Alimento WHERE Tipo = 'Gato';
+SELECT COUNT(*) AS TotalPerros FROM Alimento WHERE Tipo = 'Perro';
+SELECT COUNT(*) AS TotalAmbos FROM Alimento WHERE Tipo = 'Ambos';
+SELECT * FROM Alimento WHERE idCategoria = 1;
+SELECT SUM(Precio * Cantidad) AS PrecioTotal FROM Alimento;
+SELECT Nombre, SUM(Precio * Cantidad) AS PrecioTotal FROM Alimento WHERE Nombre = 'Royal Canin';
+SELECT Alimento.Nombre, Alimento.Descripcion, Alimento.Tipo, Categoria.Nombre FROM Alimento INNER JOIN Categoria ON Alimento.idCategoria = Categoria.idCategoria;
+SELECT * FROM Alimento INNER JOIN Categoria ON Alimento.idCategoria = Categoria.idCategoria;
+
+SELECT * FROM Juguete;
+SELECT Nombre, Precio FROM Juguete;
+SELECT * FROM Juguete WHERE idJuguete = 3;
+SELECT Nombre, Descripcion, Precio FROM Juguete WHERE idJuguete = 1;
+SELECT * FROM Juguete WHERE Tipo = 'Gato';
+SELECT * FROM Juguete WHERE Precio > 6.00;
+SELECT COUNT(*) AS TotalJuguetes FROM Juguete;
+SELECT * FROM Juguete WHERE idCategoria = 2;
+SELECT COUNT(*) AS TotalGatos FROM Juguete WHERE Tipo = 'Gato';
+SELECT COUNT(*) AS TotalPerros FROM Juguete WHERE Tipo = 'Perro';
+SELECT SUM(Precio) AS PrecioTotal FROM Juguete;
+SELECT Juguete.Nombre, Juguete.Descripcion, Juguete.Tipo, Categoria.Nombre FROM Juguete INNER JOIN Categoria ON Juguete.idCategoria = Categoria.idCategoria;
+SELECT * FROM Juguete INNER JOIN Categoria ON Juguete.idCategoria = Categoria.idCategoria;
+
+SELECT * FROM Inventario;
+SELECT Nombre, Cantidad FROM Inventario;
+SELECT * FROM Inventario WHERE idInventario = 3;
+SELECT * FROM Inventario WHERE Cantidad > 2;
+SELECT COUNT(*) AS TotalElementos FROM Inventario;
+SELECT * FROM Inventario WHERE idCategoria = 2;
+SELECT SUM(Cantidad) AS CantidadTotal FROM Inventario;
+SELECT Inventario.Nombre, Inventario.Cantidad, Usuario.id, Usuario.Nombres, Usuario.Telefono FROM Inventario INNER JOIN Usuario ON Inventario.idUsuario = Usuario.id;
+SELECT Inventario.idInventario, Inventario.Nombre, Inventario.Cantidad, Categoria.Nombre FROM Inventario INNER JOIN Categoria ON Inventario.idUsuario = Categoria.idCategoria;
+
+SELECT * FROM Producto;
+SELECT Producto, Informacion FROM Producto;
+SELECT * FROM Producto WHERE idProducto = 3;
+SELECT Producto, Informacion FROM Producto WHERE idProducto = 4;
+SELECT * FROM Producto WHERE idCategoria = 2;
+SELECT COUNT(*) AS TotalProductos FROM Producto;
+SELECT * FROM Producto WHERE idUsuario = 2;
+SELECT * FROM Producto WHERE idInventario = 3;
+SELECT Producto.Producto, Producto.Informacion, Usuario.id, Usuario.Nombres FROM Producto INNER JOIN Usuario ON Producto.idUsuario = Usuario.id;
+SELECT Producto.idProducto, Inventario.Nombre, Inventario.Cantidad, Producto.Informacion FROM Producto INNER JOIN Inventario ON Producto.idInventario= Inventario.idInventario;
+SELECT Producto.idProducto, Producto.Producto, Categoria.Nombre FROM Producto INNER JOIN Categoria ON Producto.idCategoria = Categoria.idCategoria;
+
+SELECT * FROM Factura;
+SELECT Fecha, Detalle FROM Factura;
+SELECT * FROM Factura WHERE idFactura = 3;
+SELECT Detalle FROM Factura WHERE idProducto = 2;
+SELECT COUNT(*) AS TotalFacturas FROM Factura;
+SELECT * FROM Factura WHERE Fecha = '2024-10-02';
+SELECT * FROM Factura WHERE idProducto IN (1, 3);
+SELECT DISTINCT idProducto FROM Factura;
+SELECT Factura.idFactura, Factura.Fecha, Factura.Detalle, Producto.Producto FROM Factura INNER JOIN Producto ON Factura.idProducto = Producto.idProducto;
+SELECT Factura.Fecha, Producto.Producto FROM Factura INNER JOIN Producto ON Factura.idProducto = Producto.idProducto;
